@@ -1,2 +1,6 @@
 tomcat/logs/
 .DS_Store
+tomcat/.idea/
+tomcat/lib/module-info.class
+tomcat/out/
+tomcat/tomcat.iml
