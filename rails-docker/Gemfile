@@ -52,6 +52,8 @@ group :development do
   # For intelliJ ruby debug
   gem 'pry'
   gem 'byebug'
+  gem 'ruby-debug-ide'
+  gem 'debase'
 end
 
 group :test do

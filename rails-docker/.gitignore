@@ -34,3 +34,4 @@ log
 tmp
 rails-docker.iml
 .ruby-version
+/out

@@ -17,13 +17,14 @@ COPY Gemfile /app/Gemfile
 COPY Gemfile.lock /app/Gemfile.lock
 RUN bundle install
 
-# Copy the rest of the application code
 COPY . /app
 
 # Precompile assets (if necessary) => 필요하지 않아서 생략
 # RUN bundle exec rake assets:precompile
 
-EXPOSE 3000
+# docker-compose.yml 에서 설정해줌
+#EXPOSE 3000
+#EXPOSE 1234
 
 # docker-compose 에서 command 로 실행시켜 주기에 생략
 #CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]

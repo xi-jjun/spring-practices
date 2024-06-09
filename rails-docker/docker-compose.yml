@@ -6,11 +6,13 @@ services:
       context: .
       dockerfile: Dockerfile-local
     image: rails_docker_image
-    command: bundle exec rails server -b 0.0.0.0
+    command: bash -c "rm -rf tmp/cache tmp/pids tmp/sockets restart.txt && tail -f /dev/null"
+    tty: true
     volumes:
       - .:/app # 해당 설정으로 인해 우리가 로컬에서 파일을 수정하면, 실행중인 container 에도 바로 반영이 됨
     ports:
       - "3002:3000"
+      - "1230:1234" # debug port
     environment:
       DATABASE_HOST: mysql_container # 기존 MySQL 8.0 container name
       DATABASE_ROOT_PASSWORD: mysql
