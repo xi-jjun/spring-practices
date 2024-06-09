@@ -1,0 +1,25 @@
+version: '3'
+services:
+  web:
+    container_name: rails_docker_app_container
+    build:
+      context: .
+      dockerfile: Dockerfile-local
+    image: rails_docker_image
+    command: bundle exec rails server -b 0.0.0.0
+    volumes:
+      - .:/app # 해당 설정으로 인해 우리가 로컬에서 파일을 수정하면, 실행중인 container 에도 바로 반영이 됨
+    ports:
+      - "3002:3000"
+    environment:
+      DATABASE_HOST: mysql_container # 기존 MySQL 8.0 container name
+      DATABASE_ROOT_PASSWORD: mysql
+      DATABASE_NAME: rails_docker_db
+    networks:
+      - mysql_db_network
+
+networks:
+  mysql_db_network:
+    external:
+      name: mysql_db_network
+

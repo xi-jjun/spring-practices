@@ -1,0 +1,29 @@
+# Dockerfile
+FROM ruby:2.5.7
+
+RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs
+
+# Set the working directory
+WORKDIR /app
+
+# upgrade bundler
+RUN gem install bundler -v 2.3.27
+# Install Bundler
+# RUN gem install bundler
+
+# Install gems
+# docker layer cache 를 효율적으로 사용하기 위해서 Gemfile 은 따로 옮긴 후 bundle install 을 진행
+COPY Gemfile /app/Gemfile
+COPY Gemfile.lock /app/Gemfile.lock
+RUN bundle install
+
+# Copy the rest of the application code
+COPY . /app
+
+# Precompile assets (if necessary) => 필요하지 않아서 생략
+# RUN bundle exec rake assets:precompile
+
+EXPOSE 3000
+
+# docker-compose 에서 command 로 실행시켜 주기에 생략
+#CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
