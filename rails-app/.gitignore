@@ -39,3 +39,4 @@ log
 .idea
 .ruby-version
 rails-app.iml
+db/schema.rb
