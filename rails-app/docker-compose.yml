@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  mysql-master:
+    image: mysql:8.0
+    container_name: mysql-master
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql
+      MYSQL_DATABASE: rails_app_db
+    volumes:
+      - mysql-master-data:/var/lib/mysql
+    ports:
+      - "3310:3306"
+    networks:
+      - rails-app-network
+
+networks:
+  rails-app-network:
+    name: rails-app-network
+
+volumes:
+  mysql-master-data:
