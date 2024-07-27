@@ -4,10 +4,6 @@ class Product < ApplicationRecord
     ON = 1
   end
 
-  def enable?
-    enable == Enable::ON
-  end
-
   def set_enable
     self.enable = Enable::ON
   end
@@ -20,7 +16,7 @@ class Product < ApplicationRecord
   #
   # @return [Boolean] 구매가능 여부 true or false
   def can_purchase?
-    return false unless enable?
+    return false unless enable
     return false unless stock > 0
 
     true
