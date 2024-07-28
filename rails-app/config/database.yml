@@ -1,0 +1,17 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8mb4
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: root
+  password: mysql
+  host: 127.0.0.1 # container 로 DB 띄울 경우, default 값인 localhost 는 인식 못함
+  port: 3310
+  socket: /tmp/mysql.sock
+
+development:
+  <<: *default
+  database: rails_app_db
+
+test:
+  <<: *default
+  database: rails_app_db_test
