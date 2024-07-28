@@ -12,16 +12,13 @@ jobs:
       mysql:
         image: mysql:8.0
         env:
-		  MYSQL_HOST: 127.0.0.1
+          MYSQL_HOST: 127.0.0.1
 		  MYSQL_DB: rails_app_db_test
 		  MYSQL_ROOT_PASSWORD: mysql
-#MYSQL_USER: root
-#		  MYSQL_PASSWORD: mysql
-#         MYSQL_ALLOW_EMPTY_PASSWORD: yes
-        ports:
-          - "3310:3306"
-    env:
-	  RAILS_ENV: test
+		ports:
+		  - "3310:3306"
+	env:
+      RAILS_ENV: test
 	
 	steps:
     - name: Checkout code
