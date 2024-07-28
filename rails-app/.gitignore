@@ -37,6 +37,6 @@
 tmp
 log
 .idea
-.ruby-version
+#.ruby-version
 rails-app.iml
-db/schema.rb
+#db/schema.rb
