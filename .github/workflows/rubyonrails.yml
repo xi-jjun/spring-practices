@@ -67,14 +67,29 @@ jobs:
             const results = JSON.parse(fs.readFileSync('rails-app/tmp/rspec_result.json', 'utf8'));
             
             let comment = `## RSpec Test Results\n\n`;
+            comment += `<table>`;
+            comment += `
+              <tr>
+                <td> rspec path </td> 
+                <td> full description </td>
+                <td> detail error message </td>
+              </tr>
+            `;
             
-            results.examples.forEach(test => {
-              if (test.status === 'failed') {
-                comment += `- **${test.full_description}**: ${test.status}\n`;
-                comment += `  - Message: ${test.exception.message}\n`;
-                comment += `  - Backtrace: ${test.exception.backtrace.join("\n")}\n`;
+            results.examples.forEach(test_case_result => {
+              if (test_case_result.status === 'failed') {
+                comment += `<tr>\n`;
+                comment += `  <td> ${test_case_result.file_path} </td>\n`;
+                comment += `  <td> ${test_case_result.full_description} </td>\n`;
+                comment += `  <td>\n\n`
+                comment += `\`\`\`console\n`;
+                comment += ` \n${test_case_result.exception.message}\n \n`;
+                comment += `\`\`\`\n\n`;
+                comment += `  </td>\n`
+                comment += `</tr>`;
               }
             });
+            comment += `</table>`;
 
             github.rest.issues.createComment({
               issue_number: context.issue.number,
