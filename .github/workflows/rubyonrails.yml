@@ -50,9 +50,31 @@ jobs:
           bin/rails db:migrate
         working-directory: ./rails-app
       # Add or replace test runners here
-      - name: Run tests
-        run: bundle exec rspec .
+      - name: Run tests and make rspec_result.txt file
+        run: bundle exec rspec . --format j --out tmp/rspec_result.txt
         working-directory: ./rails-app
+
+      # for downloading test output file
+      # - name: Upload test results
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: rspec-results
+      #     path: tmp/rspec-junit.xml
+  
+      - name: Comment on pull request
+        if: failure()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { context, github } = require('@actions/github');
+            const fs = require('fs');
+            const results = fs.readFileSync('rails-app/tmp/rspec-junit.xml', 'utf8');
+            const comment = `## RSpec Test Results\n\n${results}`;
+            github.rest.issues.createComment({
+              ...context.repo,
+              issue_number: context.issue.number,
+              body: comment
+            });
 
   # lint:
   #   runs-on: ubuntu-latest
