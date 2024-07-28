@@ -1,21 +1,37 @@
-name: Pull request comment
-on:
-  # Trigger the workflow on push or pull request
-  pull_request:
-    branches:
-      - master
-      - develop
+name: Run RSpec
 
+on:
+  pull_request:
+    branches: ['*']
+  push:
+    branches: [master]
 jobs:
-  comment:
+  test:
     runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_HOST: 127.0.0.1
+          MYSQL_DB: rails_app_db_test
+# MYSQL_USER: root
+		  MYSQL_ROOT_PASSWORD: mysql
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+        ports:
+          - "3310:3306"
     steps:
-      - uses: actions/github-script@v6
+      - uses: actions/checkout@v2
+      - name: Setup Ruby 3.2
+        uses: ruby/setup-ruby@v1
         with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: '👋 Thanks for reporting!'
-            })
+          ruby-version: 3.2
+          bundler: default
+          bundler-cache: true
+      - name: Run tests
+        env:
+          RAILS_ENV: test
+          DATABASE_PORT: 3310
+        run: |
+          bin/rails db:create
+		  bin/rails db:migrate
+          bin/rspec .
