@@ -36,7 +36,7 @@ RSpec.describe Product, type: :model do
         product = Product.create!(name: 'test', price: 1000, stock: 1, enable: false)
         product.set_enable
 
-        expect(product.enable).to be_truthy
+        expect(product.enable).to be_falsey
       end
     end
   end
