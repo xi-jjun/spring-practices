@@ -22,11 +22,9 @@ jobs:
           - "3310:3306"
         env:
           MYSQL_DB: rails_app_db_test
-          # POSTGRES_USER: rails
           MYSQL_ROOT_PASSWORD: mysql
     env:
       RAILS_ENV: test
-      #DATABASE_URL: "postgres://rails:password@localhost:5432/rails_test"
 
     # Github actions permissions (PR comment에 테스트 결과 리포팅을 위해 필수)
     permissions:
