@@ -14,24 +14,32 @@ jobs:
         env:
           MYSQL_HOST: 127.0.0.1
           MYSQL_DB: rails_app_db_test
-          MYSQL_USER: root
-		  MYSQL_PASSWORD: mysql
-          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+		  MYSQL_ROOT_PASSWORD: mysql
+#MYSQL_USER: root
+#		  MYSQL_PASSWORD: mysql
+#         MYSQL_ALLOW_EMPTY_PASSWORD: yes
         ports:
           - "3310:3306"
-    steps:
-      - uses: actions/checkout@v2
-      - name: Setup Ruby 3.2
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.2
-          bundler: default
-          bundler-cache: true
-      - name: Run tests
-        env:
-          RAILS_ENV: test
-          DATABASE_PORT: 3310
-        run: |
-          bin/rails db:create
-		  bin/rails db:migrate
-          bin/rspec .
+    env:
+	  RAILS_ENV: test
+	
+	steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.2
+
+    - name: Install dependencies
+      run: bundle install
+
+    - name: Set up database
+      run: |
+        bin/rails db:create
+		bin/rails db:migrate
+
+    - name: Run tests
+      run: bundle exec rspec
+
