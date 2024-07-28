@@ -9,10 +9,13 @@ on:
   push:
     branches: [ "*" ]
   pull_request:
-    branches: [ "develop" ]
+    branches: [ "master", "develop" ]
 jobs:
-  test:
+  run-rspec:
     runs-on: ubuntu-latest
+    # defaults:
+    #   run:
+    #     working-directory: ./rails-app
     services:
       mysql:
         image: mysql:8.0
@@ -30,15 +33,26 @@ jobs:
         uses: actions/checkout@v4
       # Add or replace dependency steps here
       - name: Install Ruby and gems
-        uses: ruby/setup-ruby@55283cc23133118229fd3f97f9336ee23a179fcf # v1.146.0
+        uses: ruby/setup-ruby@v1
         with:
+          ruby-version: 3.2.2
           bundler-cache: true
       # Add or replace database setup steps here
+      - name: check pwd
+        run: pwd
+        working-directory: ./rails-app
+      - name: bundle install
+        run: bundle install
+        working-directory: ./rails-app
       - name: Set up database schema
-        run: bin/rails db:migrate
+        run: |
+          bin/rails db:create
+          bin/rails db:migrate
+        working-directory: ./rails-app
       # Add or replace test runners here
       - name: Run tests
         run: bundle exec rspec .
+        working-directory: ./rails-app
 
   # lint:
   #   runs-on: ubuntu-latest
