@@ -1,24 +1,7 @@
-# README
+# rails-app
+## Overview
+현재 프로젝트는 Rails 관련 테스트를 하기 위해서 만들었습니다.<br>
+<br>
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## 현재 테스트 목록
+- Rspec Github Actions 자동화 및 PR Comment 리포팅
