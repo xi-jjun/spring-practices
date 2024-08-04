@@ -4,12 +4,18 @@
 #
 # This workflow will install a prebuilt Ruby version, install dependencies, and
 # run tests and linters.
-name: "Ruby on Rails CI"
+name: "Run Rails Rspec"
 on:
   push:
     branches: [ "*" ]
+    paths:
+      - .github/workflows/rubyonrails.yml
+      - rails-app/**
   pull_request:
     branches: [ "master", "develop" ]
+    paths:
+      - '.github/workflows/rubyonrails.yml'
+      - 'rails-app/**'
 jobs:
   run-rspec:
     runs-on: ubuntu-latest
