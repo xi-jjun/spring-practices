@@ -30,6 +30,7 @@ RSpec.describe Product, type: :model do
     end
   end
 
+  # RSpec PR comment report 확인을 위해 일부러 실패하도록 셋팅한 테스트 케이스
   describe '.set_enable' do
     context '상품을 판매 상태로 변경했을 때' do
       it '판매가능 상태로 변경된다.' do
