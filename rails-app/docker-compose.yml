@@ -14,9 +14,20 @@ services:
     networks:
       - rails-app-network
 
+  redis-master:
+    image: redis:7.4.0-alpine
+    container_name: redis-master
+    ports: # 바인딩할 포트:내부 포트
+      - "6380:6379"
+    volumes: # 마운트할 볼륨 설정
+      - redis-master-data:/data
+    networks:
+      - rails-app-network
+
 networks:
   rails-app-network:
     name: rails-app-network
 
 volumes:
   mysql-master-data:
+  redis-master-data:
