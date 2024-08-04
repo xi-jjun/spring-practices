@@ -14,8 +14,8 @@ jobs:
   run-rspec:
     runs-on: ubuntu-latest
 
-    # Test MySQL DB
     services:
+      # Test MySQL DB Container Setting
       mysql:
         image: mysql:8.0
         ports:
@@ -23,6 +23,12 @@ jobs:
         env:
           MYSQL_DB: rails_app_db_test
           MYSQL_ROOT_PASSWORD: mysql
+      # Test Redis Container Setting
+      redis:
+        image: redis:7.4.0-alpine
+        options: --name redis-master
+        ports:
+          - "6380:6379"
     env:
       RAILS_ENV: test
 
