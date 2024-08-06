@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+# test
 RSpec.describe Product, type: :model do
   describe '.can_purchase?' do
     context '상품이 구매가능한 상태일 경우' do
