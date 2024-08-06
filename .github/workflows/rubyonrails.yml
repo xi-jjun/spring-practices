@@ -70,7 +70,7 @@ jobs:
 
       - name: test marketplace
         if: failure()
-        uses: xi-jjun/rspec-reporter@0.0.1
+        uses: xi-jjun/rspec-reporter@v0.0.1
         with:
           filepath: 'rails-app/tmp/rspec_result.json'
         env:
