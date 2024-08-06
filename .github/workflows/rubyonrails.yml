@@ -69,6 +69,7 @@ jobs:
         working-directory: ./rails-app
 
       - name: test marketplace
+        if: failure()
         uses: xi-jjun/rspec-reporter@develop
         with:
           filepath: 'rails-app/tmp/rspec_result.json'
