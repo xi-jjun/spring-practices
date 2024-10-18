@@ -46,6 +46,8 @@ jobs:
     steps:
       - name: Set rails-app source code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # ignore cache
       # Add or replace dependency steps here
       - name: Install Ruby 3.2.2
         uses: ruby/setup-ruby@v1
@@ -68,47 +70,14 @@ jobs:
           bundle exec rspec . --format j --out tmp/rspec_result.json
         working-directory: ./rails-app
 
-      - name: Comment fail test on Pull Request
-        if: failure() # when before step was fail, do this step
-        uses: actions/github-script@v7
+      - name: test marketplace
+        if: failure()
+        uses: xi-jjun/rspec-reporter@v1.1.1
         with:
-          script: |
-            const fs = require('fs');
-            const results = JSON.parse(fs.readFileSync('rails-app/tmp/rspec_result.json', 'utf8'));
-            
-            let comment = `## RSpec Test Results\n\n`;
-            comment += `<table>`;
-            comment += `
-              <tr>
-                <td> rspec path </td> 
-                <td> full description </td>
-                <td> detail error message </td>
-              </tr>
-            `;
-            
-            results.examples.forEach(test_case_result => {
-              if (test_case_result.status === 'failed') {
-                comment += `<tr>\n`;
-                comment += `  <td> ${test_case_result.file_path} </td>\n`;
-                comment += `  <td> ${test_case_result.full_description} </td>\n`;
-                comment += `  <td>\n\n`
-                comment += `\`\`\`console\n`;
-                comment += ` \n${test_case_result.exception.message}\n \n`;
-                comment += `\`\`\`\n\n`;
-                comment += `  </td>\n`
-                comment += `</tr>`;
-              }
-            });
-            comment += `</table>`;
-
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: comment
-            })
+          filepath: 'rails-app/tmp/rspec_result.json'
+          report-mode: 'onlyPRFiles'
         env:
-          GITHUB_TOKEN: ${{ secrets.CREATE_ISSUE_GITHUB_TOKEN }}     
+          GITHUB_TOKEN: ${{ secrets.CREATE_ISSUE_GITHUB_TOKEN }}
 
   # lint:
   #   runs-on: ubuntu-latest
