@@ -14,4 +14,7 @@ spring 연습장이라고 되어 있지만, 다른 내용도 포함될 가능성
   - 2024-07-28 : init project. Rspec 결과를 PR comment에서 보여주기 위해서 만들었던 샘플 어플리케이션
   - 2024-08-04 : Redis 설정 추가. Actions에서 Redis container를 띄워서 같이 테스트할 수 있도록 셋팅
   - 2024-08-05 : 특정 directory에 대한 변경사항이 push되었을 때에만 Rspec actions를 실행하도록 수정
+  - 2024-10-18 : rspec-reporter 최신 버전으로 수정
+- spring-junit : Junit, Kotest 등 Spring test framework에 대한 테스트를 진행하기 위해 생성한 프로젝트
+  - 2024-10-18 : init project. rspec-reporter에 대한 고도화를 위해서 테스트 환경이 필요하여 추가함
 
