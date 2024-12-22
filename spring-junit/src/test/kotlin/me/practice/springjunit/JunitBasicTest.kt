@@ -1,7 +1,9 @@
 package me.practice.springjunit
 
 import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import kotlin.test.assertEquals
 
 /**
@@ -20,8 +22,26 @@ class JunitBasicTest {
     @DisplayName("1에서 2를 빼면, -1이 된다.")
     @Test
     fun minusTest() {
-        val a = 1
+        val a = 3
         val b = 2
         assertEquals(-1, a - b)
+    }
+
+    @DisplayName("Describe: #divide")
+    @Nested
+    inner class Describe_divide {
+        @Nested
+        @DisplayName("Context: 나눗셈을 할 때 0으로 나누게 될 경우")
+        inner class Context_when_divide_by_zero {
+            @Test
+            @DisplayName("It: 에러가 발생한다.")
+            fun error() {
+                val a = 3
+                val b = 0
+                assertThrows<ArithmeticException> {
+                    a / b
+                }
+            }
+        }
     }
 }
