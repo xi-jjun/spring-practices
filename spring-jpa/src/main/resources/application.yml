@@ -1,0 +1,20 @@
+# setting ref : https://spring.io/guides/gs/accessing-data-mysql
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: "jdbc:mysql://localhost:3307/jpa_db?&useUnicode=true&serverTimezone=Asia/Seoul"
+    username: root
+    password: mysql
+  jpa:
+    database: mysql
+    hibernate:
+      # partitioning 은 Hibernate 에서 인지하지 못하기에, schema.sql 을 통한 직접 초기화 쿼리를 작성해서 테이블 생성해야 함
+      # 따라서 hibernate 에서 제공하는 기능을 OFF
+      ddl-auto: none
+    show-sql: true
+  # ref : https://docs.spring.io/spring-boot/how-to/data-initialization.html#howto.data-initialization
+  sql: # Hibernate init 방식 사용을 위해 옵션 추가
+    init:
+      mode: always # in-memory database 를 사용하지 않고, MySQL을 사용할 것이기에 항상 활성화하도록 해야함. (기본적으로 내장 DB사용할 경우에만 초기화됨)
+      platform: mysql
+      schema-locations: classpath:sql/schema-mysql.sql
