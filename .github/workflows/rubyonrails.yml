@@ -72,10 +72,9 @@ jobs:
 
       - name: test marketplace
         if: failure()
-        uses: xi-jjun/rspec-reporter@feature/#21_refactoring_by_detaching_parser_component
+        uses: 'xi-jjun/rspec-reporter@feature/#21_remove_report_mode'
         with:
           filepath: 'rails-app/tmp/rspec_result.json'
-		  test-framework: 'rspec'
         env:
           GITHUB_TOKEN: ${{ secrets.CREATE_ISSUE_GITHUB_TOKEN }}
 
