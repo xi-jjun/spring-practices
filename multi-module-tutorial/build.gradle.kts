@@ -1,37 +1,43 @@
 plugins {
     kotlin("jvm") version "1.9.25"
-    kotlin("plugin.spring") version "1.9.25"
-    id("org.springframework.boot") version "3.4.3"
-    id("io.spring.dependency-management") version "1.1.7"
 }
 
-group = "me.practice"
-version = "0.0.1-SNAPSHOT"
+// 현재 모듈 + 모든 하위모듈들에 적용되는 옵션
+allprojects {
+    group = "me.practice"
+    version = "0.0.1"
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+    repositories {
+        mavenCentral()
     }
 }
 
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    implementation("org.springframework.boot:spring-boot-starter")
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-}
-
-kotlin {
-    compilerOptions {
-        freeCompilerArgs.addAll("-Xjsr305=strict")
+// 모든 하위 모듈들에만 적용되는 옵션
+subprojects {
+    apply {
+        plugin("org.jetbrains.kotlin.jvm")
     }
-}
 
-tasks.withType<Test> {
-    useJUnitPlatform()
+    java.sourceCompatibility = JavaVersion.VERSION_17
+    java.targetCompatibility = JavaVersion.VERSION_17
+
+    kotlin {
+        compilerOptions {
+            freeCompilerArgs.addAll("-Xjsr305=strict")
+        }
+    }
+
+    dependencies {
+        implementation("org.jetbrains.kotlin:kotlin-reflect")
+        implementation(kotlin("test"))
+    }
+
+    // spring 플러그인을 root에 선언하지 않아서, bootJar 에 대한 제어는 불가능
+    tasks.getByName("jar") {
+        enabled = true
+    }
+
+    tasks.withType<Test> {
+        useJUnitPlatform()
+    }
 }
