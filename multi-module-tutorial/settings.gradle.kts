@@ -9,3 +9,6 @@ include(":tutorial-web")
 
 // domain 모듈 추가 (순수 kotlin 객체)
 include(":tutorial-domain")
+
+// infra 모듈 추가
+include(":infra:db:tutorial-postgresql")
