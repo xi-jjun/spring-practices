@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/tutorial_test
+    url: jdbc:postgresql://localhost:5432/tutorial
     username: root
     password: matsosik_password # local 환경에 있던 postgresql 계정...
     driver-class-name: org.postgresql.Driver
@@ -8,4 +8,4 @@ spring:
     show-sql: true
     database: postgresql
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
