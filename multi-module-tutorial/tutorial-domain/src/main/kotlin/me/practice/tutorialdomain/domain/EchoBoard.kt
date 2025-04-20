@@ -6,7 +6,7 @@ import java.time.LocalDateTime
  * 유저가 게시글을 작성할 게시판
  */
 data class EchoBoard(
-    var id: Long,
+    var id: Long? = null,
     var name: String,
-    var createdDt: LocalDateTime,
+    var createdDt: LocalDateTime = LocalDateTime.now(),
 )
