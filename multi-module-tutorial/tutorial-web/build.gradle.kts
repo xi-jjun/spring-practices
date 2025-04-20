@@ -6,21 +6,22 @@
  * 덕분에 플러그인을 명시만 하면 되고, 버전은 root 에서 간편하게 관리할 수 있음.
  */
 plugins {
-	kotlin("plugin.spring")
 	id("org.springframework.boot")
 	id("io.spring.dependency-management")
+
+	// @Component annotation 을 사용할 때, open class 로 자동으로 만들기 위한 플러그인
+	kotlin("plugin.spring")
 }
 
-// 실행 확인을 위한 옵션
-//tasks.getByName("bootJar") {
-//	enabled = true
-//}
-//
-//tasks.getByName("jar") {
-//	enabled = false
-//}
-
 dependencies {
+	implementation(project(":tutorial-domain"))
+	runtimeOnly(project(":infra:db:tutorial-postgresql"))
+
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+}
+
+tasks {
+	bootJar { enabled = true }
+	jar { enabled = false }
 }

@@ -1,4 +1,4 @@
-package me.practice.tutorialdomain
+package me.practice.tutorialdomain.domain
 
 import java.time.LocalDateTime
 
